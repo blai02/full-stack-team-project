@@ -28,7 +28,7 @@ const productDetail1 = {
 }
 
 const cartItem = {
-    id: 'mongooseId',
+    productId: 'mongooseId',
     name: 'name',
     imgUrl: 'https://placehold.co/300x200',
     category: 'category',
