@@ -4,9 +4,10 @@ import { useLoginMutation } from '../features/api/apiSlice';
 
 export default function LoginForm() {
     const [login, { isLoading }] = useLoginMutation();
-    const onFinish = (values) => {
+    const onFinish = async (values) => {
         console.log('Success:', values);
-        login(values);
+        const result = await login(values);
+        console.log(result);
     };
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
@@ -31,12 +32,12 @@ export default function LoginForm() {
             autoComplete="off"
         >
             <Form.Item
-                label="Username"
-                name="username"
+                label="Email"
+                name="email"
                 rules={[
                     {
                         required: true,
-                        message: 'Please input your username!',
+                        message: 'Please input your email!',
                     },
                 ]}
             >
@@ -56,7 +57,7 @@ export default function LoginForm() {
                 <Input.Password />
             </Form.Item>
 
-            <Form.Item
+            {/* <Form.Item
                 name="remember"
                 valuePropName="checked"
                 wrapperCol={{
@@ -65,7 +66,7 @@ export default function LoginForm() {
                 }}
             >
                 <Checkbox>Remember me</Checkbox>
-            </Form.Item>
+            </Form.Item> */}
 
             <Form.Item
                 wrapperCol={{
