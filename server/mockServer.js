@@ -62,34 +62,42 @@ app.post('/api/login', (req, res, next) => {
     });
 });
 
+// get all products
 app.get('/api/products', (req, res, next) => {
     res.json([productBrief1, productBrief1]);
 });
 
+// get product detail
 app.get('/api/products/:productId', (req, res, next) => {
     res.json(productDetail1);
 })
 
+// get products by specific vendor
 app.get('/api/users/:username/products', (req, res, next) => {
     res.json([productBrief1, productBrief1]);
 });
 
+// create product for vendor
 app.post('/api/users/:username/products', (req, res, next) => {
     const { name, imgUrl, category, description, inventory, price } = req.body;
     validate([name, imgUrl, category, description, inventory, price], res, productDetail1);
 });
 
+// edit product for vendor
 app.put('/api/users/:username/products', (req, res, next) => {
     res.json(productDetail1);
 });
 
+// delete product for vendor
 app.delete('/api/users/:username/products', (req, res, next) => {
 });
 
+// get my cart
 app.get('/api/cart', (req, res, next) => {
     res.json([cartItem, cartItem]);
 });
 
+// add/modify item in my cart, cout = 0 will remove item
 app.put('/api/cart', (req, res, next) => {
     const { productId, count } = req.body;
     validate([productId, count], res);
