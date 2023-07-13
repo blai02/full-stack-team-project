@@ -4,6 +4,7 @@ const cors = require('cors');
 const errorHandler = require('./handlers/error');
 const authRoutes = require('./routes/auth');
 const productRoutes = require('./routes/products');
+const cartRoutes = require('./routes/cart');
 const db = require('./models');
 
 const PORT = 8080;
@@ -14,6 +15,7 @@ app.use(cors());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
+app.use('/api/cart', cartRoutes);
 
 app.use((req, res, next) => {
   const err = new Error('Not Found');

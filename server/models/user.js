@@ -28,7 +28,9 @@ const userSchema = new mongoose.Schema({
             ref: 'Product'
         },
         count: Number
-    })
+    }),
+    required: true,
+    default: {}
   }
 //   profileImageUrl: {
 //     type: String
