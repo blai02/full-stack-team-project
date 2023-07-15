@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { signIn, signUp } from 'services/auth';
+import { signIn, signUp } from '../services/auth';
 import { addError, removeError } from './errorSlice';
 
 export const initialState = {
