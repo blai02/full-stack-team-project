@@ -6,7 +6,7 @@ import AuthForm from 'components/AuthForm';
 import { signUpUser } from 'app/userSlice';
 import { Link } from 'react-router-dom';
 
-export default function SignUp() {
+export default function UpdatePass() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -20,17 +20,6 @@ export default function SignUp() {
         {
           required: true,
           message: 'Please input your email!'
-        }
-      ]
-    },
-    {
-      placeholder: 'Password',
-      name: 'password',
-      type: 'password',
-      rules: [
-        {
-          required: true,
-          message: 'Please input your password!'
         }
       ]
     }

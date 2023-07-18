@@ -16,6 +16,7 @@ export default function AuthForm({
   return (
     <>
       <Typography className={styles.title}>{title}</Typography>
+      <p>Email</p>
       <Form onFinish={onSubmit} autoComplete="off">
         {fields.map(field => (
           <Form.Item key={field.name} name={field.name} rules={field.rules}>
@@ -34,6 +35,7 @@ export default function AuthForm({
             )}
           </Form.Item>
         ))}
+        
         <Form.Item>
           <Button
             type="primary"

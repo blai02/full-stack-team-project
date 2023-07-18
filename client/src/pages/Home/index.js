@@ -4,11 +4,11 @@ import { Navigate } from 'react-router-dom';
 import MessageTimeline from 'pages/Message';
 
 export default function Home() {
-//   const { isAuthenticated } = useSelector(state => state.user);
+  const { isAuthenticated } = useSelector(state => state.user);
 
-//   if (!isAuthenticated) {
-//     return <Navigate to="/login" state={{ from: '/' }} />;
-//   }
+  if (!isAuthenticated) {
+    return <Navigate to="/login" state={{ from: '/' }} />;
+  }
 
-//   return <MessageTimeline />;
+  return <MessageTimeline />;
 }
