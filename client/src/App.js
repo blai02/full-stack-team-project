@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 // import Layout from 'components/Layout';
 // import AuthLayout from 'components/Layout/AuthLayout';
 import SignUp from './pages/SignUp';
+import CartItem from './components/Cart/CartItem';
 // import LogIn from 'pages/LogIn';
 // import NotFound from 'pages/NotFound';
 // import Home from 'pages/Home';
@@ -10,13 +11,14 @@ import SignUp from './pages/SignUp';
 function App() {
   return (
 
-    <BrowserRouter>
-      <Routes>
+    // <BrowserRouter>
+    //   <Routes>
 
-            <Route path="signup" element={<SignUp />} />
+    //         <Route path="signup" element={<SignUp />} />
 
-      </Routes>
-    </BrowserRouter>
+    //   </Routes>
+    // </BrowserRouter>
+    <CartItem></CartItem>
   );
 }
 

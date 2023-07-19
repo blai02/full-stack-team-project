@@ -66,3 +66,33 @@ exports.signup = async function (req, res, next) {
     });
   }
 };
+
+exports.confirmemail = async function (req, res, next) {
+  return res.sendStatus(200);
+}
+
+exports.changepassword = async function (req, res, next) {
+  try {
+    // finding a user
+    const user = await db.User.findById(res.locals.userId);
+
+    // checking if their password matches what was sent to the server
+    const isMatch = await user.comparePassword(req.body.oldPassword);
+
+    if (isMatch) {
+      user.password = req.body.newPassword;
+      user.save();
+      return res.sendStatus(200);
+    } else {
+      return next({
+        status: 400,
+        message: 'Invalid Password.'
+      });
+    }
+  } catch (err) {
+    return next({
+      status: 400,
+      message: err.message
+    });
+  }
+}
