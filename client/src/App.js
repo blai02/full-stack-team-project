@@ -9,6 +9,7 @@ import CartItem from './components/Cart/CartItem';
 // import NewMessage from 'pages/Message/NewMessage';
 
 function App() {
+  localStorage.setItem('token', 'eyJhbGciOiJIUzI1NiJ9.NjRiMDgwYmVmOWU0YWE5MGI1OTQyYmIy.BF2fMdxx7UsZf_pVuWJmrthwVX91tIuPrW2gEurazQE');
   return (
 
     // <BrowserRouter>
