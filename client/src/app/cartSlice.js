@@ -22,7 +22,7 @@ const updateCartAction = createAsyncThunk(
     async (data, thunkAPI) => {
         try {
             let updates = {}, cart = {};
-            while (Object.keys(updates = thunkAPI.getState().update).length) {
+            while (Object.keys(updates = thunkAPI.getState().cart.update).length) {
                 thunkAPI.dispatch(clearUpdateCart());
                 cart = await updateCartMutation(updates);
                 thunkAPI.dispatch(removeError());
@@ -38,7 +38,8 @@ const updateCartAction = createAsyncThunk(
 
 export const updateCart = (productId, count) => (dispatch, getState) => {
     dispatch(updateCartInternal({ productId, count }));
-    if (!getState().isPending) {
+    console.log(getState());
+    if (!getState().cart.isPending) {
         dispatch(updateCartAction());
     }
 };
@@ -56,22 +57,23 @@ const cartSlice = createSlice({
     reducers: {
         updateCartInternal: (state, action) => {
             state.update[action.payload.productId] = action.payload.count;
+            state.cart[action.payload.productId].count = action.payload.count;
         },
         clearUpdateCart: (state, action) => {
             state.update = {};
         }
     },
     extraReducers: (builder) => {
-        // builder.addCase(updateCartAction.fulfilled, (state, action) => {
-        //     state.cart = action.payload;
-        //     state.isPending = false;
-        // });
-        // builder.addCase(updateCartAction.rejected, (state, action) => {
-        //     state.isPending = false;
-        // });
-        // builder.addCase(updateCartAction.pending, (state, action) => {
-        //     state.isPending = true;
-        // });
+        builder.addCase(updateCartAction.fulfilled, (state, action) => {
+            state.cart = action.payload;
+            state.isPending = false;
+        });
+        builder.addCase(updateCartAction.rejected, (state, action) => {
+            state.isPending = false;
+        });
+        builder.addCase(updateCartAction.pending, (state, action) => {
+            state.isPending = true;
+        });
         builder.addCase(getCartAction.fulfilled, (state, action) => {
             state.cart = action.payload;
             state.isPending = false;

@@ -11,6 +11,7 @@ exports.getCart = async function (req, res, next) {
 
 exports.updateCart = async function (req, res, next) {
   try {
+    const user = await db.User.findById(res.locals.userId);
     for (const productId in req.body) {
       const count = req.body[productId];
       if (!Number.isInteger(count) || count < 0) {
@@ -19,7 +20,6 @@ exports.updateCart = async function (req, res, next) {
           message: 'count must be an integer'
         });
       }
-      const user = await db.User.findById(res.locals.userId);
       if (count === 0) {
         user.cart.delete(productId);
       } else {
@@ -30,7 +30,8 @@ exports.updateCart = async function (req, res, next) {
       }
   
     }
-    await user.save().populate('cart.$*.product');
+    await user.save();
+    await user.populate('cart.$*.product');
     return res.json(user.cart);
   } catch (err) {
     return next(err);
