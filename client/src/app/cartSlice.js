@@ -65,7 +65,7 @@ const cartSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(updateCartAction.fulfilled, (state, action) => {
-            state.cart = action.payload;
+            state.cart = action.payload.cart;
             state.isPending = false;
         });
         builder.addCase(updateCartAction.rejected, (state, action) => {
@@ -75,7 +75,7 @@ const cartSlice = createSlice({
             state.isPending = true;
         });
         builder.addCase(getCartAction.fulfilled, (state, action) => {
-            state.cart = action.payload;
+            state.cart = action.payload.cart;
             state.isPending = false;
         });
         builder.addCase(getCartAction.rejected, (state, action) => {

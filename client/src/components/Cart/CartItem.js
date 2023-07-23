@@ -42,7 +42,7 @@ export default function Cart() {
                                         <Button onClick={decrement(item.product._id)}><MinusOutlined /></Button>
                                         <InputNumber
                                         onChange={onChange(item.product._id)}
-                                        style={{'max-width': '25%'}}
+                                        style={{'max-width': '4em'}}
                                         min={minValue}
                                         max={maxValue}
                                         precision={0}

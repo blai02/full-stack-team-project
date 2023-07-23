@@ -31,7 +31,8 @@ const userSchema = new mongoose.Schema({
     }),
     required: true,
     default: {}
-  }
+  },
+  discounts: [String]
 //   profileImageUrl: {
 //     type: String
 //   },
