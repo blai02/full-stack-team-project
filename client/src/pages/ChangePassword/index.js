@@ -2,11 +2,11 @@ import React from 'react';
 import { MailOutlined, UserOutlined, LinkOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import AuthForm from 'components/AuthForm';
+import AuthChangePasswordForm from 'components/AuthChangePasswordForm';
 import { signUpUser } from 'app/userSlice';
 import { Link } from 'react-router-dom';
 
-export default function UpdatePass() {
+export default function ChangePassword() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -26,18 +26,19 @@ export default function UpdatePass() {
   ];
 
   const onSubmit = data => {
-    dispatch(signUpUser(data)).then(() => navigate('/login'));
+    dispatch(signUpUser(data)).then(() => navigate('/confirmemail'));
   };
   return (
     <div>
-      <AuthForm
-        buttonText="Create account"
+      <AuthChangePasswordForm
+        buttonText="Update password"
         onSubmit={onSubmit}
-        title="Sign up an account"
+        title="Update your password"
+        subtitle="Enter your email link, we will send you the recovery link"
         fields={fields}
       />
       <p>
-        Already have an account? <Link to="/signin">sign in</Link>
+        Already have an account? <Link to="/login">sign in</Link>
       </p>
     </div>
   );

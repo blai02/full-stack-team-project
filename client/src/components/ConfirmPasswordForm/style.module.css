@@ -1,0 +1,14 @@
+.mainDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* This is just an example, adjust according to your layout */
+  border: 1px solid black;
+}
+
+/* You can adjust the properties below according to your layout */
+p {
+  text-align: center;
+  font-size: 24px;
+}
