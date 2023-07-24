@@ -15,7 +15,7 @@ exports.login = async function (req, res, next) {
     // if it all matches, log them in
     if (isMatch) {
       let token = jwt.sign(
-        id,
+        {id},
         process.env.JWT_SECRET_KEY
       );
       return res.status(200).json({
@@ -42,7 +42,7 @@ exports.signup = async function (req, res, next) {
     let user = await db.User.create(req.body);
     let { id, username, isVendor } = user;
     let token = await jwt.sign(
-      id,
+      {id},
       process.env.JWT_SECRET_KEY
     );
     return res.status(200).json({
