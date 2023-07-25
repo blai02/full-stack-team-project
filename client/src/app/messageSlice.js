@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { fetchMessages, createMessage, deleteMessage } from 'services/messages';
+import { fetchMessages, createMessage, deleteMessage } from '../services/messages';
 import { removeError, addError } from './errorSlice';
 
 const initialState = {
