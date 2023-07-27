@@ -1,8 +1,9 @@
-import { MenuOutlined } from '@ant-design/icons';
-import { Button, Drawer } from 'antd';
+import { ShoppingCartOutlined } from '@ant-design/icons';
+import { Button, Modal } from 'antd';
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useLocation, Link } from 'react-router-dom';
-import LeftMenu from './LeftMenu';
+import CartItem from 'components/Cart/CartItem';
 import RightMenu from './RightMenu';
 
 import './style.css';
@@ -10,8 +11,9 @@ import './style.css';
 const TITLE = 'Management Chuwa';
 
 const Navbar = () => {
+  const { isAuthenticated } = useSelector(state => state.user);
   const [open, setOpen] = useState(false);
-  const showDrawer = () => {
+  const showModal = () => {
     setOpen(!open);
   };
 
@@ -27,27 +29,22 @@ const Navbar = () => {
         {TITLE}
       </Link>
       <div className="navbar-menu">
-        <div className="leftMenu">
-          <LeftMenu mode="horizontal" />
-        </div>
-        <Button className="menuButton" type="text" onClick={showDrawer}>
-          <MenuOutlined />
+        <Button className="cartButton" type="text" onClick={showModal}>
+          <ShoppingCartOutlined />
         </Button>
         <div className="rightMenu">
           <RightMenu mode="horizontal" />
         </div>
 
-        <Drawer
-          title={TITLE}
-          placement="right"
-          closable={true}
-          onClose={showDrawer}
-          open={open}
-          style={{ zIndex: 99 }}
-        >
-          <LeftMenu mode="inline" />
-          <RightMenu mode="inline" />
-        </Drawer>
+      <Modal
+        className="cartModal"
+        cancelText="Close"
+        okText="Checkout"
+        open={open}
+        closeIcon={null}
+        onCancel={showModal}>
+          <CartItem />
+      </Modal>
       </div>
     </nav>
   );

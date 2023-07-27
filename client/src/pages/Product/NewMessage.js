@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import MessageForm from 'components/MessageForm';
-import { createMessageAction } from 'app/messageSlice';
+import { createProductAction } from 'app/productSlice';
 
 export default function NewMessage() {
   const dispatch = useDispatch();
@@ -9,7 +9,7 @@ export default function NewMessage() {
   const { user } = useSelector(state => state.user);
 
   const handleSubmit = data => {
-    dispatch(createMessageAction({ userId: user.id, text: data.text })).then(
+    dispatch(createProductAction({ userId: user.id, text: data.text })).then(
       () => {
         navigate('/');
       }

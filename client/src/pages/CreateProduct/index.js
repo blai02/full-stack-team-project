@@ -1,105 +1,64 @@
 import React from 'react';
-import { MailOutlined, UserOutlined, LinkOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import CreateProductForm from 'components/CreateProductForm';
-import { signUpUser } from 'app/userSlice';
-import { Link } from 'react-router-dom';
+import { Form, Button, Input, InputNumber, Typography } from 'antd';
+import { createProductAction } from 'app/productSlice';
+import { useParams } from 'react-router-dom';
 
-export default function CreateProduct() {
+export default function CreateProduct({ update = false }) {
+  const { products, status } = useSelector(state => state.products);
+  const { productId } = useParams();
+  let initialValues = {};
+  if (update) {
+    initialValues = products.find((product) => productId === product._id) ?? {};
+  }
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const fields = [
-    {
-      placeholder: 'Product name',
-      name: 'name',
-      type: 'text',
-      prefix: <MailOutlined />,
-      rules: [
-        {
-          required: true,
-          message: 'Please input your product name!'
-        }
-      ]
-    },
-    {
-      placeholder: 'Product Description',
-      name: 'description',
-      type: 'text',
-      prefix: <MailOutlined />,
-      rules: [
-        {
-          required: true,
-          message: 'Please input your product description!'
-        }
-      ]
-    },    
-    {
-      placeholder: 'Category',
-      name: 'category',
-      type: 'dropdown',
-      prefix: <MailOutlined />,
-      rules: [
-        {
-          required: true,
-          message: 'Please select your category!'
-        }
-      ]
-    },
-    {
-      placeholder: 'Price',
-      name: 'name',
-      type: 'text',
-      prefix: <MailOutlined />,
-      rules: [
-        {
-          required: true,
-          message: 'Please input your product name!'
-        }
-      ]
-    },
-    {
-      placeholder: 'In Stock Quantity',
-      name: 'quant',
-      type: 'text',
-      prefix: <MailOutlined />,
-      rules: [
-        {
-          required: true,
-          message: 'Please input your product name!'
-        }
-      ]
-    },
-    {
-      placeholder: 'Add image Link',
-      name: 'image',
-      type: 'text',
-      prefix: <MailOutlined />,
-      rules: [
-        {
-          required: true,
-          message: 'Please input your product name!'
-        }
-      ]
-    },
-  ];
+  function onFinish(product) {
+    if (update) {
 
-  const onSubmit = data => {
-    dispatch(signUpUser(data)).then(() => navigate('/confirmemail'));
-  };
+    } else {
+      dispatch(createProductAction(product)).then((result) => {
+        if (result.type === 'products/createProduct/fulfilled') {
+          navigate(`/products/${result.payload._id}`);
+        }
+      });
+    }
+  }
+
   return (
     <div>
-      <CreateProductForm
-        buttonText="Update password"
-        onSubmit={onSubmit}
-        title="Update your password"
-        subtitle="Enter your email link, we will send you the recovery link"
-        fields={fields}
-      />
-      <p>
-        Already have an account? <Link to="/login">sign in</Link>
-      </p>
+      <Typography.Title>Create Product</Typography.Title>
+      <Form
+        layout="vertical"
+        style={{ maxWidth: '450px' }}
+        initialValues={initialValues}
+        autoComplete="off"
+        onFinish={onFinish}
+      >
+        <Form.Item label="Product name" name="name" rules={ [{ required: true }] }>
+          <Input />
+        </Form.Item>
+        <Form.Item label="Product description" name="description" rules={ [{ required: true }] }>
+          <Input.TextArea />
+        </Form.Item>
+        <Form.Item label="Category" name="category" rules={ [{ required: true }] }>
+          <Input />
+        </Form.Item>
+        <Form.Item label="Price" name="price" rules={ [{ required: true }] }>
+          <InputNumber style={{width: '8rem'}} min={0} precision={2} controls={false} prefix="$" />
+        </Form.Item>
+        <Form.Item label="In Stock Quantity" name="inventory" rules={ [{ required: true }] }>
+          <InputNumber min={0} precision={0} controls={false} />
+        </Form.Item>
+        <Form.Item label="Add Image Link" name="imgUrl" rules={ [{ required: true }] }>
+          <Input />
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" htmlType="submit" loading={status === 'pending'}>Add Product</Button>
+        </Form.Item>
+      </Form>
     </div>
   );
 }

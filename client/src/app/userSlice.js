@@ -4,6 +4,7 @@ import { addError, removeError } from './errorSlice';
 
 export const initialState = {
   isAuthenticated: false,
+  isVendor: false,
   user: {},
   status: 'idle'
 };
@@ -45,10 +46,12 @@ const currentUserSlice = createSlice({
   reducers: {
     setCurrentUser: (state, action) => {
       state.isAuthenticated = !!Object.keys(action.payload).length;
+      state.isVendor = !!action.payload?.isVendor;
       state.user = action.payload;
     },
     logOutUser: (state, action) => {
       state.isAuthenticated = false;
+      state.isVendor = false;
       state.user = {};
       state.status = 'idle';
       localStorage.removeItem('token');
@@ -57,6 +60,7 @@ const currentUserSlice = createSlice({
   extraReducers: builder => {
     builder.addCase(authUser.fulfilled, (state, action) => {
       state.isAuthenticated = !!Object.keys(action.payload).length;
+      state.isVendor = !!action.payload?.isVendor;
       state.user = action.payload;
       state.status = 'succeeded';
     });

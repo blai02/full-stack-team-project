@@ -1,24 +1,23 @@
 import apiCall from './api';
 
-export const createMessage = async ({ userId, text }) => {
+export const createProduct = async (product) => {
   return await apiCall({
-    url: `/api/users/${userId}/messages`,
+    url: `/api/products`,
     method: 'POST',
-    data: { text }
+    data: product
   });
 };
 
-export const fetchMessages = async () => {
+export const getProducts = async () => {
   return await apiCall({
-    url: '/api/messages',
+    url: '/api/products',
     method: 'GET'
   });
 };
 
-export const deleteMessage = async ({ userId, messageId }) => {
-  console.log(userId, messageId);
+export const deleteProduct = async ({ userId, productId }) => {
   return await apiCall({
-    url: `/api/users/${userId}/messages/${messageId}`,
+    url: `/api/products/${productId}`,
     method: 'DELETE'
   });
 };

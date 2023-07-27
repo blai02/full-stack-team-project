@@ -50,12 +50,12 @@
   float: right;
 }
 
-.menuButton {
-  float: right;
+.cartButton {
+  color: white;
+  float: left;
   height: 32px;
   padding: 6px;
   margin-top: 14px;
-  display: none;
   background: none;
   margin-right: 10px;
 }
@@ -87,7 +87,7 @@
   margin-left: 8px;
 }
 
-@media (max-width: 767px) {
+/* @media (max-width: 767px) {
   .menuButton {
     display: block;
     margin-right: 10px;
@@ -114,4 +114,4 @@
   .username {
     display: inline-block;
   }
-}
+} */

@@ -10,7 +10,7 @@ export const signUp = async data => {
 
 export const signIn = async data => {
   return await apiCall({
-    url: '/api/auth/signin',
+    url: '/api/auth/login',
     method: 'POST',
     data
   });

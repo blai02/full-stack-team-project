@@ -36,11 +36,11 @@ export default function MainLayout() {
     () => ({
       height: 'calc(100vh - 64px - 69px)',
       padding: '0 50px',
-      width: isMobile ? '100%' : '440px',
+      width: '100%',
       margin: '0 auto',
       overflowY: 'auto'
     }),
-    [isMobile]
+    []
   );
 
   return (
