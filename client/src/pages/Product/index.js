@@ -25,6 +25,7 @@ export default function MessageList() {
     dispatch(getProductsAction());
   }, []);
 
+  const onClickGenerator = (productId) => () => navigate(`/products/${productId}`);
   return (
     <>
       <div style={{display: 'flex', justifyContent: 'flex-end'}}>
@@ -51,8 +52,8 @@ export default function MessageList() {
         dataSource={products}
         renderItem={(item, idx) => (
           <List.Item>
-            <Card title={item.name}>
-              <Image src={item.imgUrl} />
+            <Card title={item.name} onClick={onClickGenerator(item._id)}>
+              <Image preview={false} src={item.imgUrl} />
               <ProductControls productId={item._id} />
             </Card>
           </List.Item>
