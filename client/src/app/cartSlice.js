@@ -2,6 +2,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getCartQuery, updateCartMutation } from '../services/cart';
 import { removeError, addError } from './errorSlice';
 
+export const cartMaxValue = 999;
+
 export const getCartAction = createAsyncThunk(
     'cart/getCart',
     async (data, thunkAPI) => {
@@ -57,7 +59,8 @@ const cartSlice = createSlice({
     reducers: {
         updateCartInternal: (state, action) => {
             state.update[action.payload.productId] = action.payload.count;
-            state.cart[action.payload.productId].count = action.payload.count;
+            if (state.cart[action.payload.productId])
+                state.cart[action.payload.productId].count = action.payload.count;
         },
         clearUpdateCart: (state, action) => {
             state.update = {};

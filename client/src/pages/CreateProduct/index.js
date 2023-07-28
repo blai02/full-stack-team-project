@@ -29,7 +29,7 @@ export default function CreateProduct({ update = false }) {
 
   return (
     <div>
-      <Typography.Title>Create Product</Typography.Title>
+      <Typography.Title>{update ? "Edit Product" : "Create Product"}</Typography.Title>
       <Form
         layout="vertical"
         style={{ maxWidth: '450px' }}
@@ -56,7 +56,7 @@ export default function CreateProduct({ update = false }) {
           <Input />
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit" loading={status === 'pending'}>Add Product</Button>
+          <Button type="primary" htmlType="submit" loading={status === 'pending'}>{update ? "Edit Product" : "Add Product"}</Button>
         </Form.Item>
       </Form>
     </div>

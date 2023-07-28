@@ -23,6 +23,7 @@ function App() {
           <Route path="confirmpassword" element={<ConfirmEmail />} />
           <Route path="createproduct" element={<CreateProduct />} />
           <Route path="products/:productId" element={<ProductDetail />} />
+          <Route path="products/:productId/edit" element={<CreateProduct update={true} />} />
           <Route element={<AuthLayout />}>
             <Route path="new-message" element={<NewMessage />} />
             {/* <Route path=":messageId" element={<MessageDetail />} /> */}

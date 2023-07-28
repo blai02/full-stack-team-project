@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCartAction, updateCart } from '../../app/cartSlice';
+import { cartMaxValue, getCartAction, updateCart } from '../../app/cartSlice';
 import { Col, Row, Alert, Button, Divider, Image, InputNumber, List, Space } from 'antd';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { USDollar } from '../../pages/Format';
 
 const minValue = 1;
-const maxValue = 999;
+const maxValue = cartMaxValue;
 
 export default function Cart() {
     const dispatch = useDispatch();

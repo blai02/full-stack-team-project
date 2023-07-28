@@ -15,7 +15,7 @@ export const getProducts = async () => {
   });
 };
 
-export const deleteProduct = async ({ userId, productId }) => {
+export const deleteProduct = async (productId) => {
   return await apiCall({
     url: `/api/products/${productId}`,
     method: 'DELETE'
