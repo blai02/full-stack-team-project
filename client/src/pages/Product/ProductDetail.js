@@ -11,11 +11,13 @@ import { getCartAction } from "app/cartSlice";
 export default function ProductDetail() {
   const { productId } = useParams();
   const { products, status } = useSelector((state) => (state.products));
+  const { isAuthenticated } = useSelector((state) => (state.user));
   const isMobile = useMediaQuery('(max-width: 768px)');
   const dispatch = useDispatch();
   if (status === 'idle') {
     dispatch(getProductsAction());
-    dispatch(getCartAction());
+    if (isAuthenticated)
+      dispatch(getCartAction());
     return <Skeleton />;
   }
   if (status === 'pending') {

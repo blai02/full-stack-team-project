@@ -19,13 +19,14 @@ const IconText = ({ icon, text }) => (
 export default function MessageList() {
   const dispatch = useDispatch();
   const { products, status } = useSelector(state => state.products);
-  const { user, isVendor } = useSelector(state => state.user);
+  const { user, isAuthenticated, isVendor } = useSelector(state => state.user);
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
     dispatch(getProductsAction());
-    dispatch(getCartAction());
+    if (isAuthenticated)
+      dispatch(getCartAction());
   }, [location]);
 
   const onClickGenerator = (productId) => () => navigate(`/products/${productId}`);

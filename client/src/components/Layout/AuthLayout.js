@@ -6,7 +6,7 @@ export default function AuthLayout() {
   const { isAuthenticated, isVendor } = useSelector(state => state.user);
   const location = useLocation();
 
-  if (!isAuthenticated && isVendor) {
+  if (!(isAuthenticated && isVendor)) {
     return <Navigate to="/login" state={{ from: location.pathname }} />;
   }
 
