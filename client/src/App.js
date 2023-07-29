@@ -7,7 +7,6 @@ import NotFound from 'pages/NotFound';
 import ChangePassword from 'pages/ChangePassword';
 import ProductHome from 'pages/Product';
 import ProductDetail from './pages/Product/ProductDetail';
-import NewMessage from 'pages/Product/NewMessage';
 import ConfirmEmail from 'pages/ConfirmEmail';
 import CreateProduct from 'pages/CreateProduct';
 
@@ -21,12 +20,10 @@ function App() {
           <Route path="login" element={<LogIn />} />
           <Route path="changepassword" element={<ChangePassword />} />
           <Route path="confirmpassword" element={<ConfirmEmail />} />
-          <Route path="createproduct" element={<CreateProduct />} />
           <Route path="products/:productId" element={<ProductDetail />} />
-          <Route path="products/:productId/edit" element={<CreateProduct update={true} />} />
           <Route element={<AuthLayout />}>
-            <Route path="new-message" element={<NewMessage />} />
-            {/* <Route path=":messageId" element={<MessageDetail />} /> */}
+            <Route path="products/:productId/edit" element={<CreateProduct update={true} />} />
+            <Route path="createproduct" element={<CreateProduct />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Route>

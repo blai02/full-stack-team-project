@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getProducts, createProduct, deleteProduct } from '../services/products';
+import { getProducts, createProduct, updateProduct, deleteProduct } from '../services/products';
 import { removeError, addError } from './errorSlice';
 
 const initialState = {
@@ -37,6 +37,21 @@ export const createProductAction = createAsyncThunk(
   }
 );
 
+export const updateProductAction = createAsyncThunk(
+  'products/updateProduct',
+  async ({product, productId}, thunkAPI) => {
+    try {
+      const message = await updateProduct(product, productId);
+      thunkAPI.dispatch(removeError());
+      return message;
+    } catch (error) {
+      const { message } = error;
+      thunkAPI.dispatch(addError(message));
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+)
+
 export const deleteProductAction = createAsyncThunk(
   'products/deleteProduct',
   async (data, thunkAPI) => {
@@ -72,28 +87,39 @@ const productSlice = createSlice({
     builder.addCase(getProductsAction.pending, (state, action) => {
       state.status = 'pending';
     });
-    // builder.addCase(createProductAction.fulfilled, (state, action) => {
-    //   state.status = 'succeeded';
-    //   state.messages.push(action.payload);
-    // });
-    // builder.addCase(createProductAction.rejected, (state, action) => {
-    //   state.status = 'failed';
-    // });
-    // builder.addCase(createProductAction.pending, (state, action) => {
-    //   state.status = 'pending';
-    // });
-    // builder.addCase(deleteProductAction.fulfilled, (state, action) => {
-    //   state.status = 'succeeded';
-    //   state.messages = state.messages.filter(
-    //     message => message._id !== action.payload._id
-    //   );
-    // });
-    // builder.addCase(deleteProductAction.rejected, (state, action) => {
-    //   state.status = 'failed';
-    // });
-    // builder.addCase(deleteProductAction.pending, (state, action) => {
-    //   state.status = 'pending';
-    // });
+    builder.addCase(createProductAction.fulfilled, (state, action) => {
+      state.status = 'succeeded';
+      state.messages.push(action.payload);
+    });
+    builder.addCase(updateProductAction.rejected, (state, action) => {
+      state.status = 'failed';
+    });
+    builder.addCase(updateProductAction.pending, (state, action) => {
+      state.status = 'pending';
+    });
+    builder.addCase(updateProductAction.fulfilled, (state, action) => {
+      state.status = 'succeeded';
+      state.products = state.products.map((product) =>
+        (product._id === action.payload._id ? action.payload : product));
+    });
+    builder.addCase(createProductAction.rejected, (state, action) => {
+      state.status = 'failed';
+    });
+    builder.addCase(createProductAction.pending, (state, action) => {
+      state.status = 'pending';
+    });
+    builder.addCase(deleteProductAction.fulfilled, (state, action) => {
+      state.status = 'succeeded';
+      state.products = state.products.filter(
+        product => product._id !== action.payload._id
+      );
+    });
+    builder.addCase(deleteProductAction.rejected, (state, action) => {
+      state.status = 'failed';
+    });
+    builder.addCase(deleteProductAction.pending, (state, action) => {
+      state.status = 'pending';
+    });
   }
 });
 

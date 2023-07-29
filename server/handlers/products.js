@@ -60,7 +60,7 @@ exports.updateProduct = async function (req, res, next) {
         username: true
       }
     );
-    if (product.vendor._id !== res.locals.userId) {
+    if (product.vendor._id != res.locals.userId) { //need to cast ObjectId to string
       return next({
         status: 401,
         message: 'Unauthorized'

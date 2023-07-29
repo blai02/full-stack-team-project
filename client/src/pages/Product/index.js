@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { List, Avatar, Skeleton, Space, Button, Typography, Modal, Card, Image } from 'antd';
 import { LikeOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import dayjs from 'dayjs';
 import ProductControls from './ProductControls';
 import { getProductsAction, deleteProductAction } from 'app/productSlice';
 import styles from './style.module.css';
+import { getCartAction } from 'app/cartSlice';
 
 const IconText = ({ icon, text }) => (
   <Space>
@@ -20,10 +21,12 @@ export default function MessageList() {
   const { products, status } = useSelector(state => state.products);
   const { user, isVendor } = useSelector(state => state.user);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     dispatch(getProductsAction());
-  }, []);
+    dispatch(getCartAction());
+  }, [location]);
 
   const onClickGenerator = (productId) => () => navigate(`/products/${productId}`);
   return (
@@ -54,8 +57,8 @@ export default function MessageList() {
           <List.Item>
             <Card title={item.name} onClick={onClickGenerator(item._id)}>
               <Image preview={false} src={item.imgUrl} />
-              <ProductControls productId={item._id} />
             </Card>
+            <ProductControls productId={item._id} />
           </List.Item>
         )}
       />

@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Form, Button, Input, InputNumber, Typography } from 'antd';
-import { createProductAction } from 'app/productSlice';
+import { createProductAction, updateProductAction } from 'app/productSlice';
 import { useParams } from 'react-router-dom';
 
 export default function CreateProduct({ update = false }) {
@@ -17,7 +17,11 @@ export default function CreateProduct({ update = false }) {
 
   function onFinish(product) {
     if (update) {
-
+      dispatch(updateProductAction({product, productId})).then((result) => {
+        if (result.type === 'products/updateProduct/fulfilled') {
+          navigate(`/products/${result.payload._id}`);
+        }
+      });
     } else {
       dispatch(createProductAction(product)).then((result) => {
         if (result.type === 'products/createProduct/fulfilled') {

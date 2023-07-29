@@ -26,7 +26,7 @@ export default function ProductControls({ productId }) {
     }
     
 
-    const decrement = () => dispatch(updateCart(productId, count - 1));
+    const decrement = () => count > 0 && dispatch(updateCart(productId, count - 1));
     const increment = () => count < cartMaxValue && dispatch(updateCart(productId, count + 1));
     const onChange = (newValue) => dispatch(updateCart(productId, newValue));
     const handleEdit = () => navigate(`/products/${productId}/edit`);
@@ -53,13 +53,14 @@ export default function ProductControls({ productId }) {
                     <Button onClick={increment}><PlusOutlined /></Button>
                 </Space.Compact>
             ) : (
-                <Button onClick={increment}>Add To Cart</Button>
+                <Button onClick={increment} loading={cartState.isPending}>Add To Cart</Button>
             )}
             {product.vendor?._id === user.user.id ? (
                 <Dropdown.Button
                     menu={{ items: [{ key: 'delete', label: 'Delete' }], onClick: () => setIsModalOpen(true) }}
                     onClick={handleEdit}
-                    icon={<DownOutlined />}>
+                    icon={<DownOutlined />}
+                    loading={status === 'pending'}>
                     Edit
                 </Dropdown.Button>
             ) : ''}

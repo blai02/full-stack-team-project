@@ -6,6 +6,7 @@ import { USDollar } from "../Format";
 import { useMediaQuery } from "hooks/useMediaQuery";
 import { Row, Col, Image, Skeleton, Space, Typography } from "antd";
 import ProductControls from "./ProductControls";
+import { getCartAction } from "app/cartSlice";
 
 export default function ProductDetail() {
   const { productId } = useParams();
@@ -14,6 +15,7 @@ export default function ProductDetail() {
   const dispatch = useDispatch();
   if (status === 'idle') {
     dispatch(getProductsAction());
+    dispatch(getCartAction());
     return <Skeleton />;
   }
   if (status === 'pending') {

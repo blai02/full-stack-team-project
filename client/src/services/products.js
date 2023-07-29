@@ -15,6 +15,14 @@ export const getProducts = async () => {
   });
 };
 
+export const updateProduct = async (product, productId) => {
+  return await apiCall({
+    url: `/api/products/${productId}`,
+    method: 'PUT',
+    data: product
+  });
+};
+
 export const deleteProduct = async (productId) => {
   return await apiCall({
     url: `/api/products/${productId}`,

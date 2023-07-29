@@ -1,17 +1,26 @@
 const db = require('../models');
 
-function returnCart(user) {
+async function returnCart(user) {
   let subtotal = 0;
-  user.cart.forEach((item) => {
-    subtotal += item.count * item.product.price;
+  let modified = false;
+  user.cart.forEach((item, id) => {
+    if (!item.product) {
+      user.cart.delete(id);
+      modified = true; // remove deleted items from cart
+    } else {
+      subtotal += item.count * item.product.price;
+    }
   });
+  if (modified) {
+    await user.save();
+  }
   let discount = 0;
   if (user.discounts?.size) {
     discount = -.2 * subtotal;
   }
   let tax = 0.1 * (subtotal + discount);
   let total = subtotal + discount + tax;
-  return {
+  let retObject = {
     cart: user.cart,
     discountCodes: user.discounts === undefined ? [] : user.discounts,
     subtotal,
@@ -19,12 +28,13 @@ function returnCart(user) {
     tax,
     total
   }
+  return retObject;
 }
 
 exports.getCart = async function (req, res, next) {
   try {
     const user = await db.User.findById(res.locals.userId).populate('cart.$*.product');
-    return res.json(returnCart(user));
+    return res.json(await returnCart(user));
   } catch (err) {
     return next(err);
   }
@@ -53,7 +63,7 @@ exports.updateCart = async function (req, res, next) {
     }
     await user.save();
     await user.populate('cart.$*.product');
-    return res.json(returnCart(user));
+    return res.json(await returnCart(user));
   } catch (err) {
     return next(err);
   }
