@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getCartQuery, updateCartMutation } from '../services/cart';
 import { removeError, addError } from './errorSlice';
+import { logOutUser } from './userSlice';
 
 export const cartMaxValue = 999;
 
@@ -50,7 +51,11 @@ const initialState = {
     cart: {},
     update: {},
     status: '',
-    isPending: false
+    isPending: false,
+    subtotal: 0,
+    discount: 0,
+    tax: 0,
+    total: 0
 };
 
 const cartSlice = createSlice({
@@ -69,6 +74,10 @@ const cartSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(updateCartAction.fulfilled, (state, action) => {
             state.cart = action.payload.cart;
+            state.subtotal = action.payload.subtotal;
+            state.discount = action.payload.discount;
+            state.tax = action.payload.tax;
+            state.total = action.payload.total;
             state.isPending = false;
         });
         builder.addCase(updateCartAction.rejected, (state, action) => {
@@ -79,6 +88,10 @@ const cartSlice = createSlice({
         });
         builder.addCase(getCartAction.fulfilled, (state, action) => {
             state.cart = action.payload.cart;
+            state.subtotal = action.payload.subtotal;
+            state.discount = action.payload.discount;
+            state.tax = action.payload.tax;
+            state.total = action.payload.total;
             state.isPending = false;
         });
         builder.addCase(getCartAction.rejected, (state, action) => {
@@ -87,6 +100,16 @@ const cartSlice = createSlice({
         builder.addCase(getCartAction.pending, (state, action) => {
             state.isPending = true;
         });
+        builder.addCase(logOutUser, (state, action) => {
+            Object.assign(state, initialState);
+            // Object.entries(initialState).forEach(([key, value]) => {
+            //     state[key] = value;
+            // });
+            // state.cart = initialState.cart;
+            // state.update = initialState.update;
+            // state.isPending = initialState.isPending;
+            // state.status = initialState.status;
+        })
     }
 })
 

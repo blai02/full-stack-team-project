@@ -89,7 +89,7 @@ const productSlice = createSlice({
     });
     builder.addCase(createProductAction.fulfilled, (state, action) => {
       state.status = 'succeeded';
-      state.messages.push(action.payload);
+      state.products.push(action.payload);
     });
     builder.addCase(updateProductAction.rejected, (state, action) => {
       state.status = 'failed';

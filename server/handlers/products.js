@@ -81,18 +81,19 @@ exports.updateProduct = async function (req, res, next) {
 
 exports.deleteProduct = async function (req, res, next) {
   try {
-    const product = await db.Product.findByIdAndDelete(req.params.product_id).populate(
+    const product = await db.Product.findById(req.params.product_id).populate(
       'vendor',
       {
         username: true
       }
     );
-    if (product.vendor._id !== res.locals.userId) {
+    if (product.vendor._id != res.locals.userId) { //need to cast ObjectId to string
       return next({
         status: 401,
         message: 'Unauthorized'
       });
     }
+    await product.deleteOne();
     return res.json(product);
   } catch (err) {
     return next(err);

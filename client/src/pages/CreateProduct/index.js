@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Form, Button, Input, InputNumber, Typography } from 'antd';
 import { createProductAction, updateProductAction } from 'app/productSlice';
 import { useParams } from 'react-router-dom';
+import NotFound from '../NotFound';
 
 export default function CreateProduct({ update = false }) {
   const { products, status } = useSelector(state => state.products);
@@ -14,6 +15,11 @@ export default function CreateProduct({ update = false }) {
   }
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const { user } = useSelector(state => state.user);
+  if (update && user.username !== initialValues.vendor?.username) {
+    return <NotFound />;
+  }
 
   function onFinish(product) {
     if (update) {

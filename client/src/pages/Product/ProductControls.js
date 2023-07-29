@@ -42,6 +42,7 @@ export default function ProductControls({ productId }) {
     const handleDelete = () => {
       dispatch(deleteProductAction(productId)).then(() => {
         setIsModalOpen(false);
+        navigate('/');
       });
     };
     return (
@@ -63,7 +64,7 @@ export default function ProductControls({ productId }) {
             ) : (
                 <Button onClick={add} loading={cartState.isPending}>Add To Cart</Button>
             )}
-            {isAuthenticated && product.vendor?._id === user.id ? (
+            {isAuthenticated && product.vendor?.username === user.username ? (
                 <Dropdown.Button
                     menu={{ items: [{ key: 'delete', label: 'Delete' }], onClick: () => setIsModalOpen(true) }}
                     onClick={handleEdit}
