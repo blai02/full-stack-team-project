@@ -12,6 +12,18 @@ export default function SignUp() {
 
   const fields = [
     {
+      placeholder: 'Username',
+      name: 'username',
+      type: 'text',
+      prefix: <UserOutlined />,
+      rules: [
+        {
+          required: true,
+          message: 'Please input your username!'
+        }
+      ]
+    },
+    {
       placeholder: 'Email',
       name: 'email',
       type: 'text',
@@ -33,6 +45,12 @@ export default function SignUp() {
           message: 'Please input your password!'
         }
       ]
+    },
+    {
+      placeholder: 'Are you a vendor?',
+      name: 'isVendor',
+      type: 'checkbox',
+      rules: []
     }
   ];
 

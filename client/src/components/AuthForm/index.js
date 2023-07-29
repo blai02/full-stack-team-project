@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, Input, Typography } from 'antd';
+import { Button, Checkbox, Form, Input, Typography } from 'antd';
 import { LockOutlined } from '@ant-design/icons';
 import { useSelector } from 'react-redux';
 import styles from './style.module.css';
@@ -19,23 +19,29 @@ export default function AuthForm({
       <p>Email</p>
       <Form onFinish={onSubmit} autoComplete="off">
         {fields.map(field => (
-          <Form.Item key={field.name} name={field.name} rules={field.rules}>
-            {field.type === 'password' ? (
-              <Input.Password
-                placeholder={field.placeholder}
-                prefix={<LockOutlined />}
-                size="large"
-              />
-            ) : (
-              <Input
-                placeholder={field.placeholder}
-                prefix={field.prefix}
-                size="large"
-              />
-            )}
-          </Form.Item>
+          field.type === 'checkbox' ? (
+            <Form.Item key={field.name} name={field.name} rules={field.rules} valuePropName="checked">
+              <Checkbox>{field.placeholder}</Checkbox>
+            </Form.Item>
+          ) : (
+            <Form.Item key={field.name} name={field.name} rules={field.rules}>
+              {field.type === 'password' ? (
+                <Input.Password
+                  placeholder={field.placeholder}
+                  prefix={<LockOutlined />}
+                  size="large"
+                />
+              ) : (
+                <Input
+                  placeholder={field.placeholder}
+                  prefix={field.prefix}
+                  size="large"
+                />
+              )}
+            </Form.Item>
+          )
         ))}
-        
+
         <Form.Item>
           <Button
             type="primary"
